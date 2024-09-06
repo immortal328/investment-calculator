@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+ 
+import Header from "./components/Header.jsx"
+import UserInput from "./components/UserInput.jsx";
+import Results from "./components/Results.jsx";
 
 function App() {
+
+  const [userInput, setuserInput] = useState({
+        initialInvestment :1000,
+        annualInvestment : 1200,
+        expectedReturn: 8,
+        duration:10
+    })
+
+    function handleChange(indentifier, newValue){
+        setuserInput((previousInput) =>{
+            return {
+                ...previousInput,
+                [indentifier]:+newValue
+            }
+        });
+    }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header/>
+      <UserInput userInput={userInput} onChange={handleChange} />
+      <Results input={userInput}/>
     </div>
   );
 }
